@@ -46,21 +46,21 @@ if __name__ == "__main__":
         help='Add GUI support to command',
         type=bool,
     )
-
     args = parser.parse_args()
-    print(args)
-    cmd = BuildWithDocker(args.proj)
+    bwd = BuildWithDocker(args.proj)
     img = DockerImages(args.proj)
 
-    img.build_all()
+    # Default is build every-time,
+    img.build_one(args.d)
 
     # Add extras if specified
-    cmd.add_volume(args.v)
-    cmd.add_port(args.p)
-    cmd.add_docker_image(args.d)
-    cmd.add_gpu(args.gpu)
+    bwd.add_volume(args.v)
+    bwd.add_port(args.p)
+    bwd.add_docker_image(args.d)
+    bwd.add_gpu(args.gpu)
     if args.GUI:
-        cmd.add_gui()
-    cmd.add_exec_script(args.s)
+        bwd.add_gui()
+    bwd.add_exec_script(args.s)
+    command = bwd.get_command()
 
-    os.system(cmd.get_command())
+    os.system(command)
