@@ -1,0 +1,6 @@
+
+*.sublime-project
+
+bwd\.sublime-workspace
+
+*.pyc
