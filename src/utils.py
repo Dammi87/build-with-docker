@@ -1,6 +1,7 @@
 import os
 import custom_exceptions as ce
 
+
 def get_as_list(parameter):
     if not isinstance(parameter, list):
         return [parameter]

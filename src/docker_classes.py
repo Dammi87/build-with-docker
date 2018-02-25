@@ -1,8 +1,7 @@
 import os
 import getpass
-
-import src.utils as utils
 import src.custom_exceptions as ce
+import src.utils as utils
 GPU = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
 
