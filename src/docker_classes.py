@@ -124,5 +124,5 @@ class DockerImages():
             os.system(self._docker_build[i_cmd])
 
     def build_one(self, docker_name):
-        if docker_name in self._docker_build:
+        if utils.is_file_in_project(self._project_dir, docker_name):
             os.system(self._docker_build[docker_name])
