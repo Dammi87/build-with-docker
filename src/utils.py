@@ -52,7 +52,7 @@ def get_module_path(project_dir, script_path):
     script_path : str
 
     """
-    left_over = script_path.replace(project_dir, '')
+    left_over = os.path.abspath(script_path).replace(project_dir, '')
     if left_over[-1] == '/':
         left_over.pop(-1)
     left_over = left_over.replace('.py', '')

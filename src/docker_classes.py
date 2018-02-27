@@ -19,7 +19,7 @@ class BuildWithDocker():
             on the remote location.
 
         """
-        self._cmd = "docker run -it --rm -w %s" % project_dir
+        self._cmd = "docker run -t --rm -w %s" % project_dir
         self._has_gpu = None
         self._project_dir = project_dir
 
@@ -117,6 +117,7 @@ class BuildWithDocker():
             self._volumes,
             self._ports,
             self._gui,
+            self._custom_cmd,
             self._docker_image,
             self._exec
         ]

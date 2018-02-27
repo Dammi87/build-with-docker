@@ -75,7 +75,6 @@ def zip_send_and_unzip(ssh_user, ssh_ip, proj_root, remote_folder, ignore_paths=
     run_system_command(command)
 
     # Unzip the file at remote location
-    tmp_build = time.strftime("%Y_%m_%d_%H%M%S")
     tmp_path = os.path.join(remote_folder, tmp_build)
     remote_zip = os.path.join(remote_zip_folder, "%s.zip" % tmp_build)
     create_cmd = "ssh %s@%s mkdir -p %s" % (ssh_user, ssh_ip, tmp_path)
@@ -140,23 +139,26 @@ def maybe_send(args):
 
     for item in check_list:
         if getattr(args, item) is None:
-            print(item, getattr(args, item))
             raise
             return None
 
     # Begin by creating the end remote folder
-    remote_folder = create_remote_dir(
+    create_remote_dir(
         args.ssh_user,
         args.ssh_ip,
         args.proj,
         args.remote_folder)
 
     # Send it over
-    zip_send_and_unzip(
+    remote_folder = zip_send_and_unzip(
         args.ssh_user,
         args.ssh_ip,
         args.proj,
-        remote_folder,
+        args.remote_folder,
         ignore_paths=None)
 
     return remote_folder
+
+
+def append_ssh(ssh_user, ssh_ip, command):
+    return "ssh %s@%s %s" % (ssh_user, ssh_ip, command)

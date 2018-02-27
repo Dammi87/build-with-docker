@@ -89,10 +89,15 @@ if __name__ == "__main__":
     # Add extras if specified
     command = bwd.get_command()
 
+    # Append ssh command if needed
+    if ssh_result is not None:
+        command = ssh.append_ssh(args.ssh_user, args.ssh_ip, command)
+
     if args.show:
         print("Docker command: %s" % command)
         print("Arguments received:")
         for ivar in args.__dict__:
             print("\t{} \t\t:= {}".format(ivar, getattr(args, ivar)))
 
+    # Run
     os.system(command)
