@@ -1,7 +1,7 @@
 import argparse
 import os
 from src.docker_classes import BuildWithDocker, DockerImages
-
+import src.ssh_utils as ssh
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -44,23 +44,55 @@ if __name__ == "__main__":
     parser.add_argument(
         '-GUI',
         help='Add GUI support to command',
-        type=bool,
+        action='store_true'
+    )
+    parser.add_argument(
+        '-build',
+        help='Build the docker image before running',
+        action='store_true'
+    )
+    parser.add_argument(
+        '-ssh_ip',
+        help='Ip address of the remote-build server',
+        default=None,
+        type=str
+    )
+    parser.add_argument(
+        '-ssh_user',
+        help='The user to login as on the remote-build server',
+        default=None,
+        type=str
+    )
+    parser.add_argument(
+        '-remote_folder',
+        help='The remote folder that stores the remote-builds',
+        default=None,
+        type=str
+    )
+    parser.add_argument(
+        '-show',
+        help='Print the docker command that is run',
+        action='store_true'
     )
     args = parser.parse_args()
-    bwd = BuildWithDocker(args.proj)
-    img = DockerImages(args.proj)
 
-    # Default is build every-time,
-    img.build_one(args.d)
+    # Maybe send the project through a tunnel, then build
+    ssh_result = ssh.maybe_send(args)
+    bwd = BuildWithDocker(args.proj, ssh_result)
+    bwd.add_arguments(args)
+
+    # Rebuild if necessary
+    if args.build:
+        img = DockerImages(args.proj)
+        img.build_one(args.d)
 
     # Add extras if specified
-    bwd.add_volume(args.v)
-    bwd.add_port(args.p)
-    bwd.add_docker_image(args.d)
-    bwd.add_gpu(args.gpu)
-    if args.GUI:
-        bwd.add_gui()
-    bwd.add_exec_script(args.s)
     command = bwd.get_command()
+
+    if args.show:
+        print("Docker command: %s" % command)
+        print("Arguments received:")
+        for ivar in args.__dict__:
+            print("\t{} \t\t:= {}".format(ivar, getattr(args, ivar)))
 
     os.system(command)

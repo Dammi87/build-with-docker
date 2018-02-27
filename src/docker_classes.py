@@ -7,13 +7,16 @@ GPU = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
 class BuildWithDocker():
     """Class use to generate a docker run command."""
-    def __init__(self, project_dir):
+    def __init__(self, project_dir, remote_folder=None):
         """Initialize class
 
         Parameters
         ----------
         project_dir : str
             Full path to the project directory
+        remote_folder : str, optional
+            States the the folder this project was copied to
+            on the remote location.
 
         """
         self._cmd = "docker run -it --rm -w %s" % project_dir
@@ -26,9 +29,24 @@ class BuildWithDocker():
         self._gui = False
         self._exec = None
         self._docker_image = None
+        self._custom_cmd = None
 
-        # Add project as volume
-        self.add_volume(project_dir)
+        # Add project as volume. If this is a ssh build, then we
+        # want to mount the remote folder into the docker container
+        # instead, all other mount points should still be the same.
+        if remote_folder is None:
+            self.add_volume(project_dir)
+        else:
+            self.add_custom_command("-v %s:%s" % (remote_folder, project_dir))
+
+    def add_custom_command(self, cmd):
+        if cmd is None:
+            return
+        if self._custom_cmd is None:
+            self._custom_cmd = ""
+        for i_cmd in utils.get_as_list(cmd):
+            self._custom_cmd = "%s %s" % \
+                (self._custom_cmd, i_cmd)
 
     def add_volume(self, volume):
         if volume is None:
@@ -77,6 +95,15 @@ class BuildWithDocker():
         if self._has_gpu:
             ctr_name = "GPU_%s_%s" (GPU[self._has_gpu], ctr_name)
         self._docker_image = "--name %s %s:%s" % (ctr_name, proj_name, tag_name)
+
+    def add_arguments(self, args):
+        self.add_volume(args.v)
+        self.add_port(args.p)
+        self.add_docker_image(args.d)
+        self.add_gpu(args.gpu)
+        if args.GUI:
+            self.add_gui()
+        self.add_exec_script(args.s)
 
     def get_command(self):
         """Returns the complete docker command."""
