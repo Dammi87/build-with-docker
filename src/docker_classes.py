@@ -143,14 +143,14 @@ class BuildWithDocker():
 
 
 class DockerImages():
-    def __init__(self, project_dir):
+    def __init__(self, project_dir, ssh_user=None, ssh_ip=None):
         self._project_dir = project_dir
-        self._docker_build = utils.get_docker_build_commands(project_dir)
+        self._docker_build = utils.get_docker_build_commands(project_dir, ssh_user, ssh_ip)
 
     def build_all(self):
-        for i_cmd in self._docker_build:
-            os.system(self._docker_build[i_cmd])
+        for ibuild in self._docker_build:
+            utils.run_command(ibuild)
 
     def build_one(self, docker_name):
-        if utils.is_file_in_project(self._project_dir, docker_name):
-            os.system(self._docker_build[docker_name])
+        utils.run_command(self._docker_build[docker_name])
+

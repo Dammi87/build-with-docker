@@ -75,7 +75,7 @@ def zip_send_and_unzip(ssh_user, ssh_ip, proj_root, remote_folder, ignore_paths=
     run_system_command(command)
 
     # Unzip the file at remote location
-    tmp_path = os.path.join(remote_folder, tmp_build)
+    tmp_path = os.path.join(remote_folder, tmp_build, os.path.basename(proj_root))
     remote_zip = os.path.join(remote_zip_folder, "%s.zip" % tmp_build)
     create_cmd = "ssh %s@%s mkdir -p %s" % (ssh_user, ssh_ip, tmp_path)
     unzip_cmd = "ssh %s@%s unzip %s -d %s" % (ssh_user, ssh_ip, remote_zip, tmp_path)
@@ -139,7 +139,6 @@ def maybe_send(args):
 
     for item in check_list:
         if getattr(args, item) is None:
-            raise
             return None
 
     # Begin by creating the end remote folder
@@ -156,6 +155,11 @@ def maybe_send(args):
         args.proj,
         args.remote_folder,
         ignore_paths=None)
+
+    # If on remote, always rebuild
+    from src.docker_classes import DockerImages
+    img = DockerImages(remote_folder, args.ssh_user, args.ssh_ip)
+    img.build_one(args.d)
 
     return remote_folder
 

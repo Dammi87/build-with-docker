@@ -1,0 +1,34 @@
+{
+    "adamf": [
+        {
+            "docker_file" : "python3",
+            "volumes": ["/home/adamf/data"],
+            "ports": ["8000:8000"],
+            "GUI": true
+        },
+        {
+            "docker_file" : "python3",
+            "volumes": ["/home/adamf/data"],
+            "ports": ["8000:8000"]
+        }
+    ],
+    "bobby": [
+        {
+            "docker_file" : "python3",
+            "volumes": ["/home/bobby/data"],
+            "ports": ["8000:8000"]
+        }
+    ],
+    "common": [
+        {
+            "docker_file" : "python3",
+            "volumes": ["/data"],
+            "ports": ["8000:8000"],
+            "gpu": [0],
+            "GUI": true,
+            "ssh_ip": "10.0.1.173",
+            "ssh_user": "protolab", 
+            "remote_folder": "/hdd/users/"
+        }
+    ]
+}
