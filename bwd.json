@@ -1,26 +1,34 @@
 {
     "adamf": [
         {
+            "build_name": "build_with_data",
             "docker_file" : "python3",
             "volumes": ["/home/adamf/data"],
             "ports": ["8000:8000"],
-            "GUI": true
+            "GUI": true,
+            "build_cmd": "python3",
+            "run_as_module": false
         },
         {
             "docker_file" : "python3",
             "volumes": ["/home/adamf/data"],
-            "ports": ["8000:8000"]
+            "ports": ["8000:8000"],
+            "build_cmd": "python3 -m",
+            "run_as_module": true
         }
     ],
     "bobby": [
         {
             "docker_file" : "python3",
             "volumes": ["/home/bobby/data"],
-            "ports": ["8000:8000"]
+            "ports": ["8000:8000"],
+            "build_cmd": "python3 -u",
+            "run_as_module": false
         }
     ],
     "common": [
         {
+            "build_name": "build_on_remote",
             "docker_file" : "python3",
             "volumes": ["/data"],
             "ports": ["8000:8000"],
@@ -28,7 +36,9 @@
             "GUI": true,
             "ssh_ip": "10.0.1.173",
             "ssh_user": "protolab", 
-            "remote_folder": "/hdd/users/"
+            "remote_folder": "/hdd/users/",
+            "build_cmd": "python3 -u",
+            "run_as_module": false
         }
     ]
 }

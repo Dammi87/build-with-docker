@@ -79,10 +79,13 @@ class BuildWithDocker():
         self._has_gpu = gpu_nr
         self._gpus = "NV=%s nvidia-" % ','.join(["%d" % g for g in gpu_nr])
 
-    def add_exec_script(self, script_path, shell="python"):
+    def add_exec_script(self, script_path, run_as_module=False, shell="python -m"):
         """Adds the execution script."""
-        module = utils.get_module_path(self._project_dir, script_path)
-        self._exec = "%s -m %s" % (shell, module)
+        if run_as_module:
+            suffix = utils.get_module_path(self._project_dir, script_path)
+        else:
+            suffix = os.path.relpath(script_path, self._project_dir)
+        self._exec = "%s %s" % (shell, suffix)
 
     def add_docker_image(self, docker_file):
         """Adds the desired docker image to run from."""
@@ -103,7 +106,7 @@ class BuildWithDocker():
         self.add_gpu(args.gpu)
         if args.GUI:
             self.add_gui()
-        self.add_exec_script(args.s)
+        self.add_exec_script(args.s, args.run_as_module, shell=args.build_cmd)
 
     def get_command(self):
         """Returns the complete docker command."""
