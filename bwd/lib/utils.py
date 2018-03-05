@@ -1,6 +1,9 @@
 import os
-import src.custom_exceptions as ce
-from src.ssh_utils import append_ssh
+import sys
+
+
+from . import custom_exceptions as ce
+from .ssh_utils import append_ssh
 
 
 def run_command(cmd, debug=False):
@@ -179,3 +182,20 @@ def is_file_in_project(project, dockerfile, ssh_user=None, ssh_ip=None):
     dockerfile = dockerfile.replace('.Dockerfile', '')
 
     return dockerfile in all_files
+
+
+all_colors = {
+    'RED' : "\033[1;31m" ,
+    'BLUE' : "\033[1;34m",
+    'CYAN' : "\033[1;36m",
+    'GREEN' : "\033[0;32m",
+    'WHITE' : "\033[0;37m",
+    'RESET' : "\033[0;0m",
+    'BOLD' : "\033[;1m",
+    'REVERSE' : "\033[;7m"
+}
+
+
+def set_color(color):
+    sys.stdout.write(all_colors[color])
+    sys.stdout.flush()

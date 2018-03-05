@@ -5,9 +5,10 @@
             "docker_file" : "python3",
             "volumes": ["/home/adamf/data"],
             "ports": ["8000:8000"],
-            "GUI": true,
+            "GUI": false,
             "build_cmd": "python3",
-            "run_as_module": false
+            "run_as_module": false,
+            "custom_cmd": ["--network host"]
         },
         {
             "docker_file" : "python3",
@@ -32,8 +33,8 @@
             "docker_file" : "python3",
             "volumes": ["/data"],
             "ports": ["8000:8000"],
-            "gpu": [0],
-            "GUI": true,
+            "gpu": [0, 1],
+            "GUI": false,
             "ssh_ip": "10.0.1.173",
             "ssh_user": "protolab", 
             "remote_folder": "/hdd/users/",

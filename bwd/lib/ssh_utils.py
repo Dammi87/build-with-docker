@@ -157,7 +157,7 @@ def maybe_send(args):
         ignore_paths=None)
 
     # If on remote, always rebuild
-    from src.docker_classes import DockerImages
+    from .docker_classes import DockerImages
     img = DockerImages(remote_folder, args.ssh_user, args.ssh_ip)
     img.build_one(args.d)
 

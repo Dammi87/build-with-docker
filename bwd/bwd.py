@@ -2,10 +2,15 @@ import argparse
 from argparse import Namespace
 import os
 import json
-from src.docker_classes import BuildWithDocker
-import src.ssh_utils as ssh
 import getpass
+import sys
 
+from lib.docker_classes import BuildWithDocker
+from lib import ssh_utils as ssh
+from lib import utils
+
+# Make all print statements RED until we run the actual build command
+utils.set_color('RED')
 
 def check_for_cfg(project_dir):
     return os.path.exists(os.path.join(project_dir, "bwd.json"))
@@ -81,7 +86,8 @@ def get_build_setting(args):
             'ssh_user': kwargs.get('ssh_user', None),
             'remote_folder': kwargs.get('remote_folder', None),
             'run_as_module': kwargs.get('run_as_module', False),
-            'build_cmd': kwargs.get('build_cmd', None)
+            'build_cmd': kwargs.get('build_cmd', None),
+            'custom_cmd': kwargs.get('custom_cmd', None)
         }
 
         return Namespace(**param)
@@ -89,51 +95,53 @@ def get_build_setting(args):
     return get_namespace(**build_settings[nr])
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-s',
-        help='Python script to build',
-        type=str,
-        required=True,
-    )
-    parser.add_argument(
-        '-proj',
-        help='Project directory',
-        type=str,
-        required=True
-    )
-    parser.add_argument(
-        '-build_name',
-        help='Which build setting from "common" or "$USER" to build with. Default is first one from user.',
-        type=str,
-        required=False
-    )
-    args = parser.parse_args()
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '-s',
+    help='Python script to build',
+    type=str,
+    required=True,
+)
+parser.add_argument(
+    '-proj',
+    help='Project directory',
+    type=str,
+    required=True
+)
+parser.add_argument(
+    '-build_name',
+    help='Which build setting from "common" or "$USER" to build with. Default is first one from user.',
+    type=str,
+    required=False
+)
+args = parser.parse_args()
 
 
-    # Check for a config file
-    if not check_for_cfg(args.proj):
-        parser.error("Could not find a config file in root directory!")
+# Check for a config file
+if not check_for_cfg(args.proj):
+    parser.error("Could not find a config file in root directory!")
 
-    # Otherwise, we load in the config file
-    args = get_build_setting(args)
+# Otherwise, we load in the config file
+args = get_build_setting(args)
 
-    # Maybe send the project through a tunnel, then build
-    ssh_result = ssh.maybe_send(args)
+# Maybe send the project through a tunnel, then build
+ssh_result = ssh.maybe_send(args)
 
-    # Get the docker builder class
-    bwd = BuildWithDocker(args.proj, ssh_result)
-    # Pass it our arguments
-    bwd.add_arguments(args)
+# Get the docker builder class
+bwd = BuildWithDocker(args.proj, ssh_result)
+# Pass it our arguments
+bwd.add_arguments(args)
 
-    # Get the command
-    command = bwd.get_command()
+# Get the command
+command = bwd.get_command()
 
-    # Append ssh command if needed
-    if ssh_result is not None:
-        command = ssh.append_ssh(args.ssh_user, args.ssh_ip, command)
+# Append ssh command if needed
+if ssh_result is not None:
+    command = ssh.append_ssh(args.ssh_user, args.ssh_ip, command)
 
-    # Run
-    print(command)
-    os.system(command)
+# Run
+utils.set_color('GREEN')
+print("Docker command:\n\t--> %s" % command)
+utils.set_color('RESET')
+os.system(command)

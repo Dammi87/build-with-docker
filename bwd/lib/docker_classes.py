@@ -1,7 +1,7 @@
 import os
 import getpass
-import src.custom_exceptions as ce
-import src.utils as utils
+from . import custom_exceptions as ce
+from . import utils as utils
 GPU = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
 
@@ -66,8 +66,10 @@ class BuildWithDocker():
             self._ports = "%s -p %s" % \
                 (self._ports, p)
 
-    def add_gui(self):
+    def add_gui(self, gui_on):
         """Adds GUI support."""
+        if gui_on is None or not gui_on:
+            return
         self._gui = "-e DISPLAY=$DISPLAY"
         self._gui = "%s -v %s" % (self._gui, "/tmp/.X11-unix:/tmp/.X11-unix")
         self._gui = "%s %s" % (self._gui, "--env=\"QT_X11_NO_MITSHM=1\"")
@@ -104,8 +106,8 @@ class BuildWithDocker():
         self.add_port(args.p)
         self.add_docker_image(args.d)
         self.add_gpu(args.gpu)
-        if args.GUI:
-            self.add_gui()
+        self.add_gui(args.GUI)
+        self.add_custom_command(args.custom_cmd)
         self.add_exec_script(args.s, args.run_as_module, shell=args.build_cmd)
 
     def get_command(self):
