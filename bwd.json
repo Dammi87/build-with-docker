@@ -3,7 +3,7 @@
         {
             "build_name": "build_with_data",
             "docker_file" : "python3",
-            "volumes": ["/home/adamf/data"],
+            "volumes": [["/home/adamf/data", "/home/adamf/"]],
             "ports": ["8000:8000"],
             "GUI": false,
             "build_cmd": "python3",

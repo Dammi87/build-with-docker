@@ -54,8 +54,12 @@ class BuildWithDocker():
         if self._volumes is None:
             self._volumes = ""
         for vol in utils.get_as_list(volume):
-            self._volumes = "%s -v %s:%s" % \
-                (self._volumes, vol, vol)
+            if isinstance(vol, list) and len(vol) == 2:
+                self._volumes = "%s -v %s:%s" % \
+                    (self._volumes, vol[0], vol[1])
+            else:
+                self._volumes = "%s -v %s:%s" % \
+                    (self._volumes, vol, vol)
 
     def add_port(self, port):
         if port is None:
@@ -154,8 +158,10 @@ class DockerImages():
 
     def build_all(self):
         for ibuild in self._docker_build:
-            utils.run_command(ibuild)
+            utils.run_command(self._docker_build[ibuild], debug=True)
 
     def build_one(self, docker_name):
-        utils.run_command(self._docker_build[docker_name])
+        if docker_name not in self._docker_build:
+            raise ce.DockerFileMissing(docker_name)
+        utils.run_command(self._docker_build[docker_name], debug=True)
 

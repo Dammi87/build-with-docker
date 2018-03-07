@@ -62,13 +62,6 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/home/adamf/repos/stena_food",
-		"/home/adamf/repos/stena_food/strided_siamese_detector",
-		"/home/adamf/repos/stena_food/strided_siamese_detector/src",
-		"/home/adamf/repos/stena_food/strided_siamese_detector/src/trainer"
-	],
 	"file_history":
 	[
 		"/home/adamf/repos/build-with-docker/bwd.py",
@@ -204,7 +197,7 @@
 		[
 			[
 				"",
-				"~/repos/one_shot_seg/one_shot_seg.sublime-project"
+				"~/repos/stena_food/stena-food.sublime-project"
 			]
 		],
 		"width": 380.0

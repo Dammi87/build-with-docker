@@ -5,7 +5,7 @@ import json
 import getpass
 import sys
 
-from lib.docker_classes import BuildWithDocker
+from lib.docker_classes import BuildWithDocker, DockerImages
 from lib import ssh_utils as ssh
 from lib import utils
 
@@ -100,27 +100,53 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     '-s',
     help='Python script to build',
-    type=str,
-    required=True,
+    type=str
 )
 parser.add_argument(
     '-proj',
     help='Project directory',
-    type=str,
-    required=True
+    type=str
 )
 parser.add_argument(
     '-build_name',
     help='Which build setting from "common" or "$USER" to build with. Default is first one from user.',
+    type=str
+)
+parser.add_argument(
+    '-build_image',
+    help='Build the projects docker images, supply "all" as parameter to build all images',
     type=str,
-    required=False
+    default=None
 )
 args = parser.parse_args()
 
+# Make sure that either -s or -build_images is provided
+if args.s is None and args.build_image is None:
+    parser.error("Could not determine what to do. Make sure that you either provide this with -s or -build_image")
+
+# If project dir is not specified, assume its the cwd<
+if args.proj is None:
+    args.proj = os.getcwd()
+    print("No project specified, assuming %s is project root" % args.proj)
 
 # Check for a config file
 if not check_for_cfg(args.proj):
     parser.error("Could not find a config file in root directory!")
+
+# Build
+if args.build_image is not None:
+    docker_images = DockerImages(args.proj)
+    utils.set_color('RESET')
+    if args.build_image == 'all':
+        docker_images.build_all()
+        print("Finished building all docker images")
+    else:
+        docker_images.build_one(args.build_image)
+        print("Finished building %s docker image" % args.build_image)
+    
+# If no s argument is specified and we reach this spot, exit
+if args.s is None:
+    exit()
 
 # Otherwise, we load in the config file
 args = get_build_setting(args)
