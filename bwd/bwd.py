@@ -116,7 +116,7 @@ parser.add_argument(
     '-build_image',
     help='Build the projects docker images, supply "all" as parameter to build all images',
     type=str,
-    default=None
+    default='all'
 )
 args = parser.parse_args()
 
@@ -138,9 +138,11 @@ if args.build_image is not None:
     docker_images = DockerImages(args.proj)
     utils.set_color('RESET')
     if args.build_image == 'all':
+        print("No specific Dockerfile mentioned, building all files..")
         docker_images.build_all()
         print("Finished building all docker images")
     else:
+        print("Building %s.." % args.build_image)
         docker_images.build_one(args.build_image)
         print("Finished building %s docker image" % args.build_image)
     

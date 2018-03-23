@@ -101,17 +101,19 @@ class BuildWithDocker():
         proj_name = os.path.basename(self._project_dir).lower()
         tag_name = os.path.basename(docker_file).replace('.Dockerfile', '').lower()
         ctr_name = '%s_%s' % (getpass.getuser(), proj_name)
+        print("Now creating the names...", self._has_gpu)
         if self._has_gpu:
-            ctr_name = "GPU_%s_%s" (GPU[self._has_gpu], ctr_name)
+            append_letter = '_'.join([GPU[idx] for idx in self._has_gpu])
+            ctr_name = "GPU_%s_%s" % (append_letter, ctr_name)
         self._docker_image = "--name %s %s:%s" % (ctr_name, proj_name, tag_name)
 
     def add_arguments(self, args):
         self.add_volume(args.v)
         self.add_port(args.p)
-        self.add_docker_image(args.d)
         self.add_gpu(args.gpu)
         self.add_gui(args.GUI)
         self.add_custom_command(args.custom_cmd)
+        self.add_docker_image(args.d)
         self.add_exec_script(args.s, args.run_as_module, shell=args.build_cmd)
 
     def get_command(self):
