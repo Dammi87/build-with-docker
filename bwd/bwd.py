@@ -96,6 +96,7 @@ def get_build_setting(args):
 
 
 def init_project(project_dir):
+    print("Initializing project..")
     docker_folder = os.path.join(project_dir, 'Dockerfiles')
 
     if check_for_cfg(project_dir) or os.path.exists(docker_folder):
@@ -202,7 +203,6 @@ if args.proj is None:
 
 if args.init is not None:
     # User wants to initialize the project
-    print("Initializing project..")
     init_project(args.proj)
     exit()
 
