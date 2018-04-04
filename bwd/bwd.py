@@ -95,6 +95,62 @@ def get_build_setting(args):
     return get_namespace(**build_settings[nr])
 
 
+def init_project(project_dir):
+    docker_folder = os.path.join(project_dir, 'Dockerfiles')
+
+    if check_for_cfg(project_dir) or os.path.exists(docker_folder):
+        print("\tbwd.json and/or Dockerfiles folder already present in the project! Delete the bwd.json and the Dockefiles folder")
+        exit()
+
+    # Create the dir
+    os.makedirs(docker_folder)
+
+    # Create a dockerfile
+    with open(os.path.join(docker_folder, 'python3.Dockerfile'), 'w') as f:
+        f.write("FROM python:3.4-slim")
+
+    # Create a json config file
+    user = getpass.getuser()
+    base_cfg = {
+            user: [
+                {
+                    "build_name": "build_with_docker",
+                    "docker_file" : "python3",
+                    "build_cmd": "python3",
+                    "run_as_module": False
+                },
+                {
+                    "docker_file" : "python3",
+                    "volumes": ["/home/%s" % user],
+                    "ports": ["8000:8000"],
+                    "build_cmd": "python3 -m",
+                    "run_as_module": True
+                }
+            ],
+            "common": [
+                {
+                    "build_name": "build_on_remote",
+                    "docker_file" : "python3",
+                    "volumes": ["/data"],
+                    "ports": ["8000:8000"],
+                    "gpu": [0, 1],
+                    "GUI": False,
+                    "ssh_ip": "10.0.1.173",
+                    "ssh_user": "protolab", 
+                    "remote_folder": "/hdd/users/",
+                    "build_cmd": "python3 -u",
+                    "run_as_module": False
+                }
+            ]
+        }
+
+    print("\tDone!")
+
+    # And write to file
+    with open(os.path.join(project_dir, 'bwd.json'), 'w') as f:
+        json.dump(base_cfg, f)
+
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -110,24 +166,45 @@ parser.add_argument(
 parser.add_argument(
     '-build_name',
     help='Which build setting from "common" or "$USER" to build with. Default is first one from user.',
-    type=str
+    type=str,
+    default=''
 )
 parser.add_argument(
     '-build_image',
     help='Build the projects docker images, supply "all" as parameter to build all images',
     type=str,
-    default='all'
+    const='all',
+    default=None,
+    action='store',
+    nargs='?',
+)
+parser.add_argument(
+    '-init',
+    help='Initialize the project by creating a build config file and a Dockerfile.',
+    type=str,
+    const='',
+    default=None,
+    action='store',
+    nargs='?',
 )
 args = parser.parse_args()
 
+
 # Make sure that either -s or -build_images is provided
-if args.s is None and args.build_image is None:
+if args.s is None and args.build_image is None and args.init is None:
     parser.error("Could not determine what to do. Make sure that you either provide this with -s or -build_image")
 
 # If project dir is not specified, assume its the cwd<
 if args.proj is None:
     args.proj = os.getcwd()
     print("No project specified, assuming %s is project root" % args.proj)
+
+
+if args.init is not None:
+    # User wants to initialize the project
+    print("Initializing project..")
+    init_project(args.proj)
+    exit()
 
 # Check for a config file
 if not check_for_cfg(args.proj):
@@ -145,7 +222,8 @@ if args.build_image is not None:
         print("Building %s.." % args.build_image)
         docker_images.build_one(args.build_image)
         print("Finished building %s docker image" % args.build_image)
-    
+
+
 # If no s argument is specified and we reach this spot, exit
 if args.s is None:
     exit()

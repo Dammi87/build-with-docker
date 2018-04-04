@@ -3,20 +3,32 @@ This repo allows the user to build their Python project from within a Docker con
 
 It will also support specifying an SSH endpoint to which to run the project from, which will take care of zipping, sending, extracting and running, from the same command.
 
-### Prerequisites
+## Prerequisites
 
  * Docker https://docs.docker.com/install/
  * Nvidia-Docker [Optional] https://github.com/NVIDIA/nvidia-docker
 
-To use this for a python project, the project __must__ have a _Dockerfiles_ folder in the root of the project. Within that folder, put in your Dockerfiles. If you are interested in using a GPU as well, 
+To use this for a python project, the project __must__ have a _Dockerfiles_ folder in the root of the project. Within that folder, put in your Dockerfiles. The layout should be the following:
 
-### Installing
+``` txt
++-- Project_root
+|   +-- Dockerfiles
+|	+--+-- some_name.Dockerfile
+|   +-- bwd.json
+|   +-- ...
+|   +-- .
+```
+## Installing
 
-The project is currently not pip-installable. But if you are interested in trying this out in alpha-mode perform the following steps
+You can install this directly with pip by running
+``` bash
+sudo pip install git+https://github.com/Dammi87/build-with-docker
+```
 
-  1. git clone https://github.com/Dammi87/build-with-docker
-  2. cd build-with-docker
-  3. python -m test.hello-world
+## How to use
+Similar to the structure of this repo, you need to have a basic structure in your project root to be able to use this. ..
+
+
 
 ## Authors
 
