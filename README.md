@@ -3,6 +3,8 @@ This repo allows the user to build their Python project from within a Docker con
 
 It will also support specifying an SSH endpoint to which to run the project from, which will take care of zipping, sending, extracting and running, from the same command.
 
+Please read my blogpost for a more indepth information about this project https://dammi87.github.io/2018/building-with-docker/
+
 ## Prerequisites
 
  * Only tested on Ubuntu 14.04 and 16.04
