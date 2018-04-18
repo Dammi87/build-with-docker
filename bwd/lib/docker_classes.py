@@ -83,7 +83,7 @@ class BuildWithDocker():
         if gpu_nr is None:
             return
         self._has_gpu = gpu_nr
-        self._gpus = "NV=%s nvidia-" % ','.join(["%d" % g for g in gpu_nr])
+        self._gpus = "NV_GPU=%s nvidia-" % ','.join(["%d" % g for g in gpu_nr])
 
     def add_exec_script(self, script_path, run_as_module=False, shell="python -m"):
         """Adds the execution script."""

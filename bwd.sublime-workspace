@@ -1,0 +1,379 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"featuers",
+				"features_1"
+			],
+			[
+				"inpt",
+				"input_fn〔variable〕"
+			],
+			[
+				"bran",
+				"branch_2"
+			],
+			[
+				"bra",
+				"branch_1"
+			],
+			[
+				"brac",
+				"branch_2"
+			],
+			[
+				"num",
+				"num_parallel_calls"
+			],
+			[
+				"nump",
+				"numpy_array"
+			],
+			[
+				"pikl",
+				"pickle_folder"
+			],
+			[
+				"pic",
+				"pickle_folder"
+			],
+			[
+				"b",
+				"batch_size"
+			],
+			[
+				"batch",
+				"batch_size"
+			],
+			[
+				"diff",
+				"diff_pair"
+			],
+			[
+				"sam",
+				"same_pair"
+			],
+			[
+				"pickl",
+				"pickle_file"
+			],
+			[
+				"br",
+				"branch_2"
+			],
+			[
+				"get_",
+				"get_img_from_class"
+			],
+			[
+				"ba",
+				"batch_size"
+			],
+			[
+				"_im",
+				"_image_index_generator"
+			],
+			[
+				"ssh",
+				"ssh_result"
+			],
+			[
+				"remt",
+				"remote_folder"
+			],
+			[
+				"tmp",
+				"tmp_path"
+			],
+			[
+				"ss",
+				"ssh_result"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "bwd/lib/docker_classes.py",
+			"settings":
+			{
+				"buffer_size": 5670,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "bwd.sublime-project",
+			"settings":
+			{
+				"buffer_size": 45,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "pack",
+		"selected_items":
+		[
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 461.0
+	},
+	"console":
+	{
+		"height": 130.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/adamf/repos/build-with-docker",
+		"/home/adamf/repos/build-with-docker/bwd",
+		"/home/adamf/repos/build-with-docker/bwd/lib"
+	],
+	"file_history":
+	[
+		"/home/adamf/repos/stena_food/data_handler.py",
+		"/home/adamf/repos/stena_food/strided_siamese_detector/src/trainer/pickle_input.py",
+		"/home/adamf/repos/stena_food/estimator_siamese_net/src/trainer/pickle_input.py",
+		"/home/adamf/repos/stena_food/strided_siamese_detector/src/trainer/task.py",
+		"/home/adamf/repos/stena_food/strided_siamese_detector/src/trainer/model.py",
+		"/home/adamf/.config/sublime-text-3/Packages/User/AutoDocstring.sublime-settings",
+		"/home/adamf/.config/sublime-text-3/Packages/User/python3.sublime-build",
+		"/home/adamf/repos/stena_food/strided_siamese_detector/__init__.py",
+		"/home/adamf/repos/stena_food/data_loader.py",
+		"/home/adamf/.config/sublime-text-3/Packages/AutoDocstring/AutoDocstring.sublime-settings",
+		"/home/adamf/repos/build-with-docker/bwd.py",
+		"/home/adamf/repos/build-with-docker/src/utils.py",
+		"/home/adamf/repos/build-with-docker/src/docker_classes.py",
+		"/home/adamf/repos/build-with-docker/src/ssh_utils.py"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"NV"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "bwd/lib/docker_classes.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5670,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2813,
+								2813
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 927.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "bwd.sublime-project",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 45,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								45,
+								45
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 286.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/python3.sublime-build",
+	"project": "bwd.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/repos/berge-workshop-semantic-network/berge-segment.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 287.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
