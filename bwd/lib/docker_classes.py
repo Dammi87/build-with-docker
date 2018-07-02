@@ -160,10 +160,10 @@ class DockerImages():
 
     def build_all(self):
         for ibuild in self._docker_build:
-            utils.run_command(self._docker_build[ibuild], debug=True)
+            utils.run_and_stream(self._docker_build[ibuild], debug=True)
 
     def build_one(self, docker_name):
         if docker_name not in self._docker_build:
             raise ce.DockerFileMissing(docker_name)
-        utils.run_command(self._docker_build[docker_name], debug=True)
+        utils.run_and_stream(self._docker_build[docker_name], debug=True)
 
