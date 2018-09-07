@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-__version__ = 'v0.5'
+__version__ = 'v0.6'
 REQUIRED_PACKAGES = ['colorama']
 IGNORE_PACKAGES = ['examples']
 FOUND_PACKAGES = find_packages(exclude=IGNORE_PACKAGES)

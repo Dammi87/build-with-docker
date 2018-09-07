@@ -8,7 +8,8 @@
             "GUI": false,
             "build_cmd": "python3",
             "run_as_module": false,
-            "custom_cmd": ["--network host"]
+            "custom_cmd": ["--network host"],
+            "disable_docker": true
         },
         {
             "docker_file" : "python3",
@@ -39,7 +40,8 @@
             "ssh_user": "protolab", 
             "remote_folder": "/hdd/users/",
             "build_cmd": "python3 -u",
-            "run_as_module": false
+            "run_as_module": false,
+            "disable_docker": true
         }
     ]
 }

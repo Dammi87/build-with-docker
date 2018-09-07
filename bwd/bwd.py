@@ -87,7 +87,8 @@ def get_build_setting(args):
             'remote_folder': kwargs.get('remote_folder', None),
             'run_as_module': kwargs.get('run_as_module', False),
             'build_cmd': kwargs.get('build_cmd', None),
-            'custom_cmd': kwargs.get('custom_cmd', None)
+            'custom_cmd': kwargs.get('custom_cmd', None),
+            'disable_docker': kwargs.get('disable_docker', False),
         }
 
         return Namespace(**param)
@@ -241,6 +242,13 @@ bwd.add_arguments(args)
 
 # Get the command
 command = bwd.get_command()
+
+# If disable docker, remove any docker related commands
+if args.disable_docker:
+    print("Removing docker related commands")
+    print(command)
+    command = utils.remove_docker_cmd(command, args, ssh_result)
+    print(command)
 
 # Append ssh command if needed
 if ssh_result is not None:

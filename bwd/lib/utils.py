@@ -6,6 +6,25 @@ import sys
 from . import custom_exceptions as ce
 from .ssh_utils import append_ssh
 
+def remove_docker_cmd(cmd, args, remote_folder):
+    """Removes cmd related to docker."""
+    # Find the build command
+    cmd = "%s%s" % (args.build_cmd, cmd.split(args.build_cmd)[-1])
+
+    # Add GPU if needed
+    if args.GUI:
+        devices = ",".join(["%d" % i for i in A])
+        cuda = 'CUDA_VISIBLE_DEVICES=%s' % devices
+        cmd = "%s %s" % (cuda, cmd)
+
+    # Make sure to be in project path
+    if not remote_folder:
+        cmd = "cd %s && %s" % (args.proj, cmd)
+    else:
+        cmd = '"cd %s && %s"' % (remote_folder, cmd)
+
+    return cmd
+
 
 def run_and_stream(cmd, debug=False):
     """Run a shell command and stream output
